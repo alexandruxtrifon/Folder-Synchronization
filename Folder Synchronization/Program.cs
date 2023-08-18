@@ -10,14 +10,17 @@ string[] files = Directory.GetFiles(root);
 //Console.Write("\nEnter the destination folder path: ");
 //string destination = Console.ReadLine();
 var md5 = MD5.Create();
+string[] filesdest = Directory.GetFiles(destination);
 
 foreach (string file in files)
 {
     File.Copy(file, $"{destination}{Path.GetFileName(file)}", true);
     var stream = File.OpenRead(file);
     var hash = md5.ComputeHash(stream);
-    Console.WriteLine(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
+    Console.WriteLine($"{Path.GetFileName(file)} -> " + BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
 }
+
+
 
 class Item
 {
