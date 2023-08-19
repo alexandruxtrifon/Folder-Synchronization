@@ -5,11 +5,7 @@ using System.Threading;
 
 string root = @"C:\Users\Alex\Desktop\root\";
 string destination = @"C:\Users\Alex\Desktop\destination\";
-//Console.Write("Enter the source folder path: ");
-//string root = Console.ReadLine();
 string[] files = Directory.GetFiles(root);
-//Console.Write("\nEnter the destination folder path: ");
-//string destination = Console.ReadLine();
 var md5 = MD5.Create();
 string[] filesdest = Directory.GetFiles(destination);
 List<string> rootmd5list = new List<string>();
@@ -52,10 +48,19 @@ void checkmd5()
     if (isequal)
     {
         Console.WriteLine("Lists match");
+        return;
     }
     else
     {
         Console.WriteLine("Lists do not match");
+        foreach (string file in files)
+        {
+            Console.WriteLine($"Copying file {Path.GetFileName(file)} to {destination}");
+            File.Copy(file, $"{destination}{Path.GetFileName(file)}", true);
+            var stream = File.OpenRead(file);
+            var hash = md5.ComputeHash(stream);
+            Console.WriteLine($"{Path.GetFileName(file)} -> " + BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
+        }
     }
 }
 void checkrootlist()
@@ -68,7 +73,7 @@ void checkrootlist()
 
             rootmd5list.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
         }
-        Console.WriteLine($"File found in root: {Path.GetFileName(file)}");
+        //Console.WriteLine($"File found in root: {Path.GetFileName(file)}");
     }
 }
 void checkdestinationlist()
@@ -81,6 +86,6 @@ void checkdestinationlist()
             var hash = md5.ComputeHash(stream);
             destinationmd5list.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
         }
-        Console.WriteLine($"File found in destination: {Path.GetFileName(file)}");
+        //Console.WriteLine($"File found in destination: {Path.GetFileName(file)}");
     }
 }
