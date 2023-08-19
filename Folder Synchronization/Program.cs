@@ -47,19 +47,30 @@ void checkmd5()
     bool isequal = Enumerable.SequenceEqual(rootmd5list.OrderBy(e => e), destinationmd5list.OrderBy(e => e));
     if (isequal)
     {
-        Console.WriteLine("Lists match");
+        Console.WriteLine("Folders are synchronized");
         return;
     }
     else
     {
-        Console.WriteLine("Lists do not match");
+        Console.WriteLine("Folders are not synchronized");
         foreach (string file in files)
         {
-            Console.WriteLine($"Copying file {Path.GetFileName(file)} to {destination}");
+            string filename = Path.GetFileName(file);
+            int rootindex = Array.IndexOf(files, file);
+            //if (!destinationmd5list.Contains(rootmd5list[files.ToList().IndexOf(file)]))
+            if (rootmd5list.All(x => destinationmd5list.Contains(x)))
+            { 
+                Console.WriteLine($"{DateTime.Now}  Copying file {filename} to {destination}");
+            }
+            else if (rootmd5list.Count > destinationmd5list.Count && !rootmd5list[rootindex].Equals(destinationmd5list[rootindex]))
+            {
+                Console.WriteLine($"{DateTime.Now}  Copying new file {filename} to {destination}");
+            }
+            //Console.WriteLine($"Copying file {Path.GetFileName(file)} to {destination}");
             File.Copy(file, $"{destination}{Path.GetFileName(file)}", true);
             var stream = File.OpenRead(file);
             var hash = md5.ComputeHash(stream);
-            Console.WriteLine($"{Path.GetFileName(file)} -> " + BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
+            //Console.WriteLine($"{Path.GetFileName(file)} -> " + BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
         }
     }
 }
