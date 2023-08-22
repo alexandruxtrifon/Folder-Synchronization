@@ -48,7 +48,40 @@ namespace Folder_Synchronization
 
         public override string ToString()
         {
-            return base.ToString();
+            string outputString = string.Empty;
+            foreach(Item item in this)
+            {
+                outputString += item.name + "\n";
+            }
+            return outputString;
+        }
+
+        public void CompareLists(ItemList destinationList)
+        {
+            ItemList tempSourceList = new ItemList(this);
+            ItemList tempDestinationList = new ItemList(destinationList);
+            bool isDifferent = false;
+            _logger.LogMessage("\n===============================================");
+
+            foreach(Item item in tempSourceList)
+            {
+                if(isDifferent == false)
+                {
+                    for(int i=0;i<destinationList.Count -1 && tempDestinationList[i].verified == false && item.verified == false; i++)
+                    {
+                        if (tempDestinationList[i].name != item.name || tempDestinationList[i].directory != item.directory)
+                        {
+                            _logger.LogMessage($"Item {item.name} was modified");
+                            tempDestinationList[i].verified = true;
+                            item.verified = true;
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
     }
 }
