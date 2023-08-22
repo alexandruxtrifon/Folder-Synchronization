@@ -21,5 +21,12 @@ namespace Folder_Synchronization
                 this.Add(item);
             }
         }
+
+        public ItemList GetAllFilesAndDirectories(string path)
+        {
+            ItemList tempItemList = new ItemList(_logger);
+
+                return tempItemList;
+        }
     }
 }
