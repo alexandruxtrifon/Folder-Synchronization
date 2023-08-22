@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Folder_Synchronization;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Threading;
@@ -6,14 +7,15 @@ using System.Threading;
 
 void executeCode()
 {
-    string root = @"C:\Users\Alex\Desktop\root\";
-    string destination = @"C:\Users\Alex\Desktop\destination\";
-    string consolePath = @"C:\Users\Alex\Desktop\log.txt"
-    string[] files = Directory.GetFiles(root);
-    var md5 = MD5.Create();
-    string[] filesdest = Directory.GetFiles(destination);
-    List<string> rootmd5list = new List<string>();
-    List<string> destinationmd5list = new List<string>();
+    string root = @"C:\Users\Alex\Desktop\root";
+    string destination = @"C:\Users\Alex\Desktop\destination";
+    string consolePath = @"C:\Users\Alex\Desktop\log.txt";
+    Logger _logger = new Logger(consolePath);
+
+    ItemList sourceItemList = new ItemList(_logger);
+    ItemList destinationItemList = new ItemList(_logger);
+    //List<string> rootmd5list = new List<string>();
+    //List<string> destinationmd5list = new List<string>();
 
 }
 
@@ -22,7 +24,6 @@ void execute() {
 // step 1 check the files in both folders before modifying/ adding.
 checkrootlist();
 checkdestinationlist();
-Console.WriteLine("////////////////");
 
 //foreach (string file in files)
 //{
