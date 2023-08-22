@@ -25,6 +25,7 @@ namespace Folder_Synchronization
         public ItemList GetAllFilesAndDirectories(string path)
         {
             ItemList tempItemList = new ItemList(_logger);
+            string[] files = Directory.GetFiles(path);
 
                 return tempItemList;
         }
