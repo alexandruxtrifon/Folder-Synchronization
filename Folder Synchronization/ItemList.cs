@@ -27,7 +27,28 @@ namespace Folder_Synchronization
             ItemList tempItemList = new ItemList(_logger);
             string[] files = Directory.GetFiles(path);
 
-                return tempItemList;
+            foreach (string file in files)
+            {
+                this.Add(new Item(file, _logger));
+            }
+
+            string[] directories = Directory.GetDirectories(path);
+
+            foreach (string directory in directories)
+            {
+                ItemList directoryFiles = GetAllFilesAndDirectories(directory);
+
+                foreach (Item file in directoryFiles)
+                {
+                    this.Add(new Item(file.path, _logger));
+                }
+            }
+            return tempItemList;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
         }
     }
 }
