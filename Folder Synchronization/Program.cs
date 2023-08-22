@@ -11,6 +11,10 @@ string[] filesdest = Directory.GetFiles(destination);
 List<string> rootmd5list = new List<string>();
 List<string> destinationmd5list = new List<string>();
 
+void execute()
+{
+
+}
 // step 1 check the files in both folders before modifying/ adding.
 checkrootlist();
 checkdestinationlist();
