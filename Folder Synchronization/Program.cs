@@ -42,20 +42,25 @@ void executeCode()
     destinationItemList.GetAllFilesAndDirectories(destination);
     sourceItemList.CompareLists(destinationItemList);
 
+    Timer(sourceItemList, destinationItemList, root, destination, interval);
 
+}
+void Timer(ItemList sourceItemList, ItemList destinationItemList, string root, string destination, int interval)
+{
     Timer timer = null;
+
     TimerCallback callback = _ =>
     {
         sourceItemList.GetAllFilesAndDirectories(root);
         destinationItemList.GetAllFilesAndDirectories(destination);
         sourceItemList.CompareLists(destinationItemList);
     };
+
     timer = new Timer(callback, null, interval * 1000, interval * 1000);
+
     Console.WriteLine($"Folder Synchronization started. The synchronization will be repeated every {interval} seconds.");
     Console.WriteLine("Press Enter to exit.");
     Console.ReadLine();
 
     timer.Dispose();
-
 }
-
