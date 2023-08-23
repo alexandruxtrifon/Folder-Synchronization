@@ -42,10 +42,10 @@ void executeCode()
     destinationItemList.GetAllFilesAndDirectories(destination);
     sourceItemList.CompareLists(destinationItemList);
 
-    Timer(sourceItemList, destinationItemList, root, destination, interval);
+    timer(sourceItemList, destinationItemList, root, destination, interval);
 
 }
-void Timer(ItemList sourceItemList, ItemList destinationItemList, string root, string destination, int interval)
+void timer(ItemList sourceItemList, ItemList destinationItemList, string root, string destination, int interval)
 {
     Timer timer = null;
 
