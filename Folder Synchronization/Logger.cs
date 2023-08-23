@@ -49,7 +49,7 @@ namespace Folder_Synchronization
                 FileStream consoleFile = File.Create(this.consolePath);
                 consoleFile.Close();
             }
-            string message = "\n----------------------------------------------";
+            string message = "\n-----------------------------------------------------------";
             LogMessageInLogFile(message, false);
             LogMessageInConsole(message, false);
         }

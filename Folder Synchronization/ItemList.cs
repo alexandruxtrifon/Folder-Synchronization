@@ -61,7 +61,7 @@ namespace Folder_Synchronization
             ItemList tempSourceList = new ItemList(this);
             ItemList tempDestinationList = new ItemList(destinationList);
             bool isDifferent = false;
-            _logger.LogMessage("\n===============================================");
+            _logger.LogMessage("\n======================================================================");
 
             foreach(Item item in tempSourceList)
             {
@@ -71,7 +71,7 @@ namespace Folder_Synchronization
                     {
                         if (tempDestinationList[i].name != item.name || tempDestinationList[i].directory != item.directory)
                         {
-                            _logger.LogMessage($"Item {item.name} was modified");
+                            _logger.LogMessage($"Item {item.name} has been modified");
                             tempDestinationList[i].verified = true;
                             item.verified = true;
                         }
