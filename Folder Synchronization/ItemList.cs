@@ -67,7 +67,7 @@ namespace Folder_Synchronization
             {
                 if(isDifferent == false)
                 {
-                    for(int i=0;i<destinationList.Count -1 && tempDestinationList[i].verified == false && item.verified == false; i++)
+                    for(int i=0;i<tempDestinationList.Count -1 && tempDestinationList[i].verified == false && item.verified == false; i++)
                     {
                         if (tempDestinationList[i].name != item.name || tempDestinationList[i].directory != item.directory)
                         {

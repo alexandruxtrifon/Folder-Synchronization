@@ -41,7 +41,7 @@ namespace Folder_Synchronization
 
             if (this.path != _logger.consolePath)
             {
-                _logger.LogMessage($"The file named {name} has been created on path {Path.GetPathRoot(path)}");
+                _logger.LogMessage($"The file named {name} has been created on path {path}");
             }
         }
     }
