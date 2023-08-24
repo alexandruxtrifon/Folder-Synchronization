@@ -27,12 +27,16 @@ switch (args.Length)
         break;
 }
 
+// cd C:\Users\Alex\source\repos\Folder Synchronization\Folder Synchronization\bin\Debug\net7.0
+// foldersynchronization "C:\Users\Alex\Desktop\root" "C:\Users\Alex\Desktop\destination" "C:\Users\Alex\Desktop\log.txt" 5
+
 void executeCode()
 {
     string root = args[0];
     string destination = args[1];
     string consolePath = args[2];
     int interval = int.Parse(args[3]);
+
     Logger _logger = new Logger(consolePath);
 
     ItemList sourceItemList = new ItemList(_logger);
@@ -40,7 +44,7 @@ void executeCode()
 
     sourceItemList.GetAllFilesAndDirectories(root);
     destinationItemList.GetAllFilesAndDirectories(destination);
-    sourceItemList.CompareLists(destinationItemList);
+    sourceItemList.CompareLists(destinationItemList, root, destination);
 
     timer(sourceItemList, destinationItemList, root, destination, interval);
 
@@ -53,12 +57,12 @@ void timer(ItemList sourceItemList, ItemList destinationItemList, string root, s
     {
         sourceItemList.GetAllFilesAndDirectories(root);
         destinationItemList.GetAllFilesAndDirectories(destination);
-        sourceItemList.CompareLists(destinationItemList);
+        sourceItemList.CompareLists(destinationItemList, root, destination);
     };
 
     timer = new Timer(callback, null, interval * 1000, interval * 1000);
 
-    Console.WriteLine($"Folder Synchronization started. The synchronization will be repeated every {interval} seconds.");
+    Console.WriteLine($"Folder Synchronization started. The task will be repeated every {interval} seconds.");
     Console.WriteLine("Press Enter to exit.");
     Console.ReadLine();
 
