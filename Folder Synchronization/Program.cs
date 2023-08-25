@@ -35,7 +35,7 @@ void executeCode()
     string root = @"C:\Users\Alex\Desktop\root";
     string destination = @"C:\Users\Alex\Desktop\destination";
     string consolePath = @"C:\Users\Alex\Desktop\log.txt";
-    int interval = 50;
+    int interval = 10;
 
     //string root = args[0];
     //string destination = args[1];

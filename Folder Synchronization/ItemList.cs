@@ -101,17 +101,17 @@ namespace Folder_Synchronization
                 if (!item.verified)
                 {
                     _logger.LogMessage($"Deleting '{item.name}' from the destination folder");
-                    string filePath = Path.Combine(destination, item.directory, item.name);
+                    string filePath = Path.Combine(destination, item.name);
 
                     if (File.Exists(filePath))
                     {
                         File.Delete(filePath);
-                        _logger.LogMessage($"Deleted {item.name} from the destination.");
+                        _logger.LogMessage($"Deleted {item.name} from the destination folder");
                     }
                     else if (Directory.Exists(filePath))
                     {
                         Directory.Delete(filePath, true);
-                        _logger.LogMessage($"Deleted directory {item.name} from the destination.");
+                        _logger.LogMessage($"Deleted directory {item.name} from the destination folder");
                     }
                 }
             }
