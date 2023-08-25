@@ -82,7 +82,8 @@ namespace Folder_Synchronization
                     if (!found)
                     {
                         _logger.LogMessage($"Item '{item.name}' is missing in the destination folder. Copying...");
-                        string destinationPath = Path.Combine(destination, item.directory, item.name);
+                        //string destinationPath = Path.Combine(destination, item.directory, item.name);
+                        string destinationPath = Path.Combine(destination, item.name);
                         string sourcePath = Path.Combine(root, item.directory, item.name);
                         Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
                         File.Copy(item.path, destinationPath, true);
