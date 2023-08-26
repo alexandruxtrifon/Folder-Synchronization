@@ -9,7 +9,7 @@ namespace Folder_Synchronization
     internal class Logger
     {
         public string consolePath { get; set; }
-
+        private readonly object fileLock = new object();
         public void LogMessage(string message)
         {
             LogMessageInConsole(message);
@@ -30,13 +30,16 @@ namespace Folder_Synchronization
 
         public void LogMessageInLogFile(string message, bool withTimestamp = true)
         {
-            if (withTimestamp)
+            lock (fileLock)
             {
-                File.AppendAllText(consolePath, $@"[{DateTime.Now}]: {message}" + "\n");
-            }
-            else
-            {
-                File.AppendAllText(consolePath, (message + "\n"));
+                if (withTimestamp)
+                {
+                    File.AppendAllText(consolePath, $@"[{DateTime.Now}]: {message}" + "\n");
+                }
+                else
+                {
+                    File.AppendAllText(consolePath, (message + "\n"));
+                }
             }
         }
         public Logger(string consolePath)
