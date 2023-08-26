@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -169,8 +170,26 @@ namespace Folder_Synchronization
             {
                 if (!item.verified)
                 {
-                    _logger.LogMessage($"Item '{item.name}' is missing or modified in the destination folder. Copying...");
+                    //_logger.LogMessage($"Copying '{item.name}'");
                     string destinationPath = Path.Combine(destination, item.name);
+
+                    if (File.Exists(destinationPath))
+                    {
+                        using (var destFileStream = File.Open(destinationPath, FileMode.Open, FileAccess.Read))
+                        using (var sourceFileStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
+                        using (var destMD5 = MD5.Create())
+                        using (var sourceMD5 = MD5.Create())
+                        {
+                            byte[] destHash = destMD5.ComputeHash(destFileStream);
+                            byte[] sourceHash = sourceMD5.ComputeHash(sourceFileStream);
+
+                            if (BitConverter.ToString(destHash) == BitConverter.ToString(sourceHash))
+                            {
+                                item.verified = true;
+                                continue;
+                            }
+                        }
+                    }
                     Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
 
                     using (FileStream sourceStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
