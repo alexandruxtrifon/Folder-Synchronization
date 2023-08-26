@@ -59,8 +59,121 @@ namespace Folder_Synchronization
             return outputString;
         }
 
+        //public void CompareLists(ItemList destinationList, string root, string destination)
+        //{
+        //    ItemList tempSourceList = new ItemList(this);
+        //    ItemList tempDestinationList = new ItemList(destinationList);
+        //    _logger.LogMessage("\n======================================================================");
+
+
+        //    foreach (Item sourceItem in tempSourceList)
+        //    {
+        //        bool found = false;
+
+        //        for (int i = IndexOf(sourceItem); i < tempDestinationList.Count - IndexOf(sourceItem) - 1 && tempDestinationList[i].verified == false && sourceItem.verified == false; i++)
+        //        {
+        //            if (tempDestinationList[i].name != sourceItem.name || tempDestinationList[i].directory != sourceItem.directory)
+        //            {
+        //                found = true;
+        //                //_logger.LogMessage($"Item {item.name} has been modified");
+        //                //tempDestinationList[i].verified = true;
+        //                sourceItem.verified = true;
+        //                break;
+        //            }
+        //        }
+        //        foreach (Item destItem in tempDestinationList)
+        //        {
+        //            if (sourceItem.name == destItem.name &&
+        //                sourceItem.hash == destItem.hash)
+        //            {
+        //                sourceItem.verified = true;
+        //                destItem.verified = true;
+        //            }
+        //        }
+        //        //var verifiedItems = tempDestinationList.Where(item => item.verified == true).ToList();
+        //        foreach (Item item in tempDestinationList)
+        //        {
+        //            if (!item.verified)
+        //            {
+        //                string filePath = Path.Combine(destination, item.name);
+        //                //   if (File.Exists(filePath))
+        //                //  {
+        //                File.Delete(filePath);
+        //                _logger.LogMessage($"Deleted {item.name} from the destination folder");
+        //                //  }
+        //            }
+        //        }
+
+        //        foreach (string dirPath in Directory.GetDirectories(destination))
+        //        {
+        //            string dirName = Path.GetFileName(dirPath);
+        //            if (!tempSourceList.Any(item => item.directory == dirName))
+        //            {
+        //                Directory.Delete(dirPath, true);
+        //                _logger.LogMessage($"Deleted directory {dirName} from the destination folder");
+        //            }
+        //        }
+
+        //        foreach (Item item in tempSourceList)
+        //        {
+        //            if (!item.verified)
+        //            {
+        //                //_logger.LogMessage($"Copying '{item.name}'");
+        //                string destinationPath = Path.Combine(destination, item.name);
+
+        //                if (File.Exists(destinationPath))
+        //                {
+        //                    using (var destFileStream = File.Open(destinationPath, FileMode.Open, FileAccess.Read))
+        //                    using (var sourceFileStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
+        //                    using (var destMD5 = MD5.Create())
+        //                    using (var sourceMD5 = MD5.Create())
+        //                    {
+        //                        byte[] destHash = destMD5.ComputeHash(destFileStream);
+        //                        byte[] sourceHash = sourceMD5.ComputeHash(sourceFileStream);
+
+        //                        if (BitConverter.ToString(destHash) == BitConverter.ToString(sourceHash))
+        //                        {
+        //                            item.verified = true;
+        //                            continue;
+        //                        }
+        //                    }
+        //                }
+        //                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+
+        //                using (FileStream sourceStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
+        //                using (FileStream destinationStream = File.Create(destinationPath))
+        //                {
+        //                    sourceStream.CopyTo(destinationStream);
+        //                }
+
+        //                //File.Copy(item.path, destinationPath, true);
+        //                _logger.LogMessage($"Copied '{item.name}' to the destination folder");
+        //            }
+        //        }
+        //        foreach (string sourceDirPath in Directory.GetDirectories(root))
+        //        {
+        //            string dirName = Path.GetFileName(sourceDirPath);
+        //            if (!tempDestinationList.Any(item => item.directory == dirName))
+        //            {
+        //                string destinationDirPath = Path.Combine(destination, dirName);
+        //                Directory.CreateDirectory(destinationDirPath);
+
+        //                foreach (string sourceFilePath in Directory.GetFiles(sourceDirPath))
+        //                {
+        //                    string fileName = Path.GetFileName(sourceFilePath);
+        //                    string destinationFilePath = Path.Combine(destinationDirPath, fileName);
+        //                    File.Copy(sourceFilePath, destinationFilePath, true);
+        //                    _logger.LogMessage($"Copied '{fileName}' to the destination folder");
+        //                }
+
+        //                _logger.LogMessage($"Copied directory {dirName} to the destination folder");
+        //            }
+        //        }
+        //    }
+        //}
+
         public void CompareLists(ItemList destinationList, string root, string destination)
-        {
+            {
             ItemList tempSourceList = new ItemList(this);
             ItemList tempDestinationList = new ItemList(destinationList);
             _logger.LogMessage("\n======================================================================");
@@ -72,12 +185,11 @@ namespace Folder_Synchronization
                 {
                     bool found = false;
 
-
                     for (int i = IndexOf(sourceItem); i < tempDestinationList.Count - IndexOf(sourceItem) - 1 && tempDestinationList[i].verified == false && sourceItem.verified == false; i++)
                     {
                         if (tempDestinationList[i].name != sourceItem.name || tempDestinationList[i].directory != sourceItem.directory)
                         {
-                            found = true;
+                                         found = true;
                             //_logger.LogMessage($"Item {item.name} has been modified");
                             //tempDestinationList[i].verified = true;
                             sourceItem.verified = true;
@@ -93,73 +205,66 @@ namespace Folder_Synchronization
                             destItem.verified = true;
                         }
                     }
-                    //var verifiedItems = tempDestinationList.Where(item => item.verified == true).ToList();
-                    foreach (Item item in tempDestinationList)
-                    {
-                        if (!item.verified)
-                        {
-                            string filePath = Path.Combine(destination, item.name);
-                         //   if (File.Exists(filePath))
-                          //  {
-                                File.Delete(filePath);
-                                _logger.LogMessage($"Deleted {item.name} from the destination folder");
-                          //  }
-                             if (Directory.Exists(filePath))
-                            {
-                                Directory.Delete(filePath, true);
-                                _logger.LogMessage($"Deleted directory {item.name} from the destination folder");
-                            }
-                        }
-                    }
-
-                    foreach (string dirPath in Directory.GetDirectories(destination))
-                    {
-                        string dirName = Path.GetFileName(dirPath);
-                        if (!tempSourceList.Any(item => item.directory == dirName))
-                        {
-                            Directory.Delete(dirPath, true);
-                            _logger.LogMessage($"Deleted directory {dirName} from the destination folder");
-                        }
-                    }
-
-                    foreach (Item item in tempSourceList)
-                    {
-                        if (!item.verified)
-                        {
-                            //_logger.LogMessage($"Copying '{item.name}'");
-                            string destinationPath = Path.Combine(destination, item.name);
-
-                            if (File.Exists(destinationPath))
-                            {
-                                using (var destFileStream = File.Open(destinationPath, FileMode.Open, FileAccess.Read))
-                                using (var sourceFileStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
-                                using (var destMD5 = MD5.Create())
-                                using (var sourceMD5 = MD5.Create())
-                                {
-                                    byte[] destHash = destMD5.ComputeHash(destFileStream);
-                                    byte[] sourceHash = sourceMD5.ComputeHash(sourceFileStream);
-
-                                    if (BitConverter.ToString(destHash) == BitConverter.ToString(sourceHash))
-                                    {
-                                        item.verified = true;
-                                        continue;
-                                    }
-                                }
-                            }
-                            Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
-
-                            using (FileStream sourceStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
-                            using (FileStream destinationStream = File.Create(destinationPath))
-                            {
-                                sourceStream.CopyTo(destinationStream);
-                            }
-
-                            //File.Copy(item.path, destinationPath, true);
-                            _logger.LogMessage($"Copied '{item.name}' to the destination folder");
-                        }
-                    }
                 }
             }
+            //var verifiedItems = tempDestinationList.Where(item => item.verified == true).ToList();
+            foreach (Item item in tempDestinationList)
+            {
+                if (!item.verified)
+                {
+                    string filePath = Path.Combine(destination, item.name);
+                    //   if (File.Exists(filePath))
+                    //  {
+                    File.Delete(filePath);
+                    _logger.LogMessage($"Deleted {item.name} from the destination folder");
+                    //  }
+                }
+            }
+
+            foreach (string dirPath in Directory.GetDirectories(destination))
+            {
+                string dirName = Path.GetFileName(dirPath);
+                if (!tempSourceList.Any(item => item.directory == dirName))
+                {
+                    Directory.Delete(dirPath, true);
+                    _logger.LogMessage($"Deleted directory {dirName} from the destination folder");
+                }
+            }
+
+            foreach (Item item in tempSourceList)
+            {
+                if (!item.verified)
+                {
+                    //_logger.LogMessage($"Copying '{item.name}'");
+                    string destinationPath = Path.Combine(destination, item.name);
+
+                    if (File.Exists(destinationPath))
+                    {
+                        using (var destFileStream = File.Open(destinationPath, FileMode.Open, FileAccess.Read))
+                        using (var sourceFileStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
+                        using (var destMD5 = MD5.Create())
+                        using (var sourceMD5 = MD5.Create())
+                        {
+                            byte[] destHash = destMD5.ComputeHash(destFileStream);
+                            byte[] sourceHash = sourceMD5.ComputeHash(sourceFileStream);
+
+                            if (BitConverter.ToString(destHash) == BitConverter.ToString(sourceHash))
+                            {
+                                item.verified = true;
+                                continue;
+                            }
+                        }
+                    }
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+
+                    using (FileStream sourceStream = File.Open(item.path, FileMode.Open, FileAccess.Read))
+                    using (FileStream destinationStream = File.Create(destinationPath))
+                    {
+                        sourceStream.CopyTo(destinationStream);
+                    }
+                    _logger.LogMessage($"Copied '{item.name}' to the destination folder");
+                }
+            } 
         }
     }
 }

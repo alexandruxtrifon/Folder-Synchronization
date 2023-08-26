@@ -60,6 +60,8 @@ void timer(ItemList sourceItemList, ItemList destinationItemList, string root, s
 
     TimerCallback callback = _ =>
     {
+        sourceItemList.Clear();
+        destinationItemList.Clear();
         sourceItemList.GetAllFilesAndDirectories(root);
         destinationItemList.GetAllFilesAndDirectories(destination);
         sourceItemList.CompareLists(destinationItemList, root, destination);
