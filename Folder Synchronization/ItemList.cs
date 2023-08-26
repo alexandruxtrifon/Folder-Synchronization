@@ -122,7 +122,6 @@ namespace Folder_Synchronization
             ItemList tempDestinationList = new ItemList(destinationList);
             _logger.LogMessage("\n======================================================================");
 
-            // Mark items in destination that are present in source and have the same hash
             foreach (Item sourceItem in tempSourceList)
             {
                 foreach (Item destItem in tempDestinationList)
@@ -137,7 +136,6 @@ namespace Folder_Synchronization
                 }
             }
 
-            // Delete items (files and directories) from destination that are not present in source
             foreach (Item item in tempDestinationList)
             {
                 if (!item.verified)
@@ -156,8 +154,17 @@ namespace Folder_Synchronization
                     }
                 }
             }
+            
+            foreach (string dirPath  in Directory.GetDirectories(destination) )
+            {
+                string dirName = Path.GetFileName(dirPath);
+                if(!tempSourceList.Any(item => item.directory == dirName))
+                {
+                    Directory.Delete(dirPath, true);
+                    _logger.LogMessage($"Deleted directory {dirName} from the destination folder");
+                }
+            }
 
-            // Copy missing or modified items from source to destination
             foreach (Item item in tempSourceList)
             {
                 if (!item.verified)

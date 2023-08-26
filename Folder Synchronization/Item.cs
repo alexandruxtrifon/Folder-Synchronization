@@ -38,10 +38,10 @@ namespace Folder_Synchronization
             _byteHash = _md5.ComputeHash(stream);
             hash = BitConverter.ToString(_byteHash).Replace("-", "").ToLowerInvariant();
             stream.Close();
-
+            var currentPath = Directory.GetParent(path);
             if (this.path != _logger.consolePath)
             {
-                _logger.LogMessage($"The file named {name} has been created on path {path}");
+                _logger.LogMessage($"The file named {name} has been found on path {currentPath}");
             }
         }
     }
